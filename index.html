@@ -1,0 +1,444 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- MORRIS CHART STYLES-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Mini Hotel</a>
+        </div>
+        <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> Today is:
+            <span id="spantodaydate"></span>
+            <script>document.getElementById("spantodaydate").innerHTML=Date();</script>
+            <a href="login.html" class="btn btn-danger square-btn-adjust">Login</a>
+        </div>
+    </nav>
+    <!-- /. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li class="text-center">
+                    <img src="assets/img/hotel.jpg" class="user-image img-responsive"/>
+                </li>
+                <li>
+                    <a class="active-menu"  href="index.html"><i class="fa fa-laptop fa-3x"></i> Search Rooms</a>
+                </li>
+                <li>
+                    <a  href="ui.html"><i class="fa fa-edit fa-3x"></i> Search Reservations</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Welcome to Mini Hotel !</h2>
+                    <h5>There are tons of very good deals waiting for you here. </h5>
+                </div>
+            </div>
+            <!-- /. ROW for search -->
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Form Elements -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Please input the information to start searching...
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                    <form role="form" name="searchroom" onsubmit="return searchRoom();">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Check in date</label>
+                                            <input type="date" class="form-control" name="checkindate" id="checkindate" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Check out date</label>
+                                            <input type="date" class="form-control" name="checkoutdate" id="checkoutdate" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Number of rooms</label>
+                                            <input type="number" class="form-control" name="numofrooms" id="numofrooms" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Click to search</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Room type </label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType1" value="option1" checked />Two queen beds
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType2" value="option2"/>One king bed
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Smoking </label>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomSmoking" id="optionsRoomSmoking1" value="smoking" />Smoking
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomSmoking" id="optionsRoomSmoking2" value="no-smoking"/>No-smoking
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomSmoking" id="optionsRoomSmoking3" value="do-not-care" checked />Do-not-care
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Elements -->
+                </div>
+            </div>
+           <!-- /. ROW  for available rooms-->
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Form Elements -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Please select the rooms you want to reserve...
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" >
+                                            <thead>
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Room Number</th>
+                                                <th>Room Type</th>
+                                                <th>Smoking</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="dataTables-availablerooms">
+                                            <tr name= "odd gradeX">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <!--here is updated by JS: updateAvailableRoomsTable -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Elements -->
+                </div>
+            </div>
+
+            <!-- /. ROW for reservation -->
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Form Elements -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Please input the information to make a reservation...
+                            <!--
+                                http://localhost:8080/api/v1/reservations
+                                ?email=hongbo.tian@sjsu.edu
+                                &fname=hongbo
+                                &midname=
+                                &lname=tian
+                                &street=888 4th street
+                                &city=San Jose&state=CA
+                                &zip=91666
+                                &rooms=1234, 5678
+                                &dl_no=F1234567
+                                &checkin_date=1/1/2016
+                                &checkout_date=1/10/2016
+                            -->
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" name="makereservationform" onsubmit="return makeReservation();">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First name</label>
+                                            <input type="text" class="form-control" name="firstname" id="firstname" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Middle name</label>
+                                            <input type="midname" class="form-control" name="midname" id="midname" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last name</label>
+                                            <input type="text" class="form-control" name="lastname" id="lastname" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>email</label>
+                                            <input type="email" class="form-control" name="email" id="email" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Driver License</label>
+                                            <input type="dlno" class="form-control" name="dlno" id="dlno" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Street</label>
+                                            <input type="text" class="form-control" name="street" id="street" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" name="city" id="city" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>State</label>
+                                            <input type="text" class="form-control" name="state" id="state" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Zip</label>
+                                            <input type="text" class="form-control" name="zip" id="zip" />
+                                        </div>
+                                    </div>
+                            </div>
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Click to reserve</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                    <!-- End Form Elements -->
+                </div>
+            </div>
+
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+<!-- JQUERY SCRIPTS -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- MORRIS CHART SCRIPTS -->
+<script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+<script src="assets/js/morris/morris.js"></script>
+<!-- CUSTOM SCRIPTS -->
+<script src="assets/js/custom.js"></script>
+<script type="text/javascript">
+    function searchRoom() {
+
+        if (!checkFormValue(document.searchroom)) {
+            alert("Please input all the information !");
+            return false;
+        }
+        var form = document.searchroom;
+        var checkinDate =new Date(form.checkindate.value);
+        var checkoutDate = new Date(form.checkoutdate.value);
+        var roomtype = form.optionsRoomType.value;
+        var smoking = form.optionsRoomSmoking.value;
+        var numofrooms = form.numofrooms.value;
+        //http://localhost:8080/api/v1/query?checkin_date=1/1/2016&checkout_date=1/1/2016&room_num=1&room_type=1&smoking=true
+        var urlsearch = "http://localhost:8080/api/v1/query?";
+        urlsearch = urlsearch + "checkin_date=" + checkinDate;
+        urlsearch = urlsearch + "&checkout_date=" + checkoutDate;
+        urlsearch = urlsearch + "&room_num=" + numofrooms;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            console.log("callback is fired.")
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+            }
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    console.log("get data successfully.")
+                    var rooms = JSON.parse(xhttp.responseText);
+                    updateAvailableRoomsTable(rooms);
+                } else {
+                    console.log("Searching available room failed.")
+                    alert("Sorry ! There are no enough vacant rooms for you. Would you like to try other date? ")
+                }
+            }
+        };
+        xhttp.open("GET", urlsearch, true);
+        xhttp.send();
+        return false;
+    }
+
+    function updateAvailableRoomsTable(rooms) {
+        var table = document.getElementById("dataTables-availablerooms");
+
+        var last;
+        while (last = table.lastChild){
+            table.removeChild(last);
+        }
+
+        for (var index = 0; index < rooms.length; index++) {
+            var room = rooms[index];
+            // cells creation
+            // table row creation
+            var row = document.createElement("tr");
+            row.className = "odd gradeX";
+
+            cell = document.createElement("td");
+            //var cellText = document.createTextNode(room['chosen']);
+            var input = document.createElement("input");
+            input.type = "checkbox";
+            input.name = "roomchosen";
+            cell.appendChild(input);
+            row.appendChild(cell);
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(room['room_number']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(room['room_type']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(room['smoking']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            table.appendChild(row);
+        }
+    }
+
+    function findRoomsSelected() {
+        var rooms =[];
+        var table = document.getElementById("dataTables-availablerooms");
+
+        for (var i = 0, row; row = table.rows[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+
+            if (row.cells[0].childNodes[0].checked === true) {
+                rooms.push(row.cells[1].childNodes[0].data);
+            }
+        }
+        console.log("here is the selected rooms:")
+        console.log(rooms);
+        return rooms;
+    }
+
+    function checkFormValue(object) {
+        var elem = object.elements;
+
+        for(var i = 0; i < elem.length; i++)
+        {
+            if (elem[i].tagName == "INPUT" && elem[i].value == "") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function makeReservation() {
+
+        if (!checkFormValue(document.searchroom)) {
+            alert("Please input all the information !");
+            return false;
+        }
+
+        if(!checkFormValue(document.makereservationform)) {
+            alert("Please input all the information !");
+            return false;
+        }
+        var rooms = findRoomsSelected();
+        if(rooms.length == 0) {
+            alert("Please select at least one room to make reservation !");
+            return false;
+        }
+
+
+        var checkinDate =new Date(document.searchroom.checkindate.value);
+        var checkoutDate = new Date(document.searchroom.checkoutdate.value);
+        var roomtype = document.searchroom.optionsRoomType.value;
+        var smoking = document.searchroom.optionsRoomSmoking.value;
+
+        var form = document.makereservationform;
+        //http://localhost:8080/api/v1/reservations?email=hongbo.tian@sjsu.edu&fname=hongbo&midname=&lname=tian&street=888 4th street&city=San Jose&state=CA&zip=91666&rooms=1234, 5678&dl_no=F1234567&checkin_date=1/1/2016&checkout_date=1/10/2016
+        var urlsearch = "http://localhost:8080/api/v1/reservations?";
+        urlsearch = urlsearch + "email=" + form.email.value;
+        urlsearch = urlsearch + "&dl_no=" + form.dlno.value;
+        urlsearch = urlsearch + "&fname=" + form.firstname.value;
+        urlsearch = urlsearch + "&midname=" + form.midname.value;
+        urlsearch = urlsearch + "&lname=" + form.lastname.value;
+        urlsearch = urlsearch + "&street=" + form.street.value;
+        urlsearch = urlsearch + "&city=" + form.city.value;
+        urlsearch = urlsearch + "&state=" + form.state.value;
+        urlsearch = urlsearch + "&zip=" + form.zip.value;
+        urlsearch = urlsearch + "&checkin_date=" + checkinDate;
+        urlsearch = urlsearch + "&checkout_date=" + checkoutDate;
+
+        urlsearch = urlsearch + "&rooms=" + rooms[0];
+
+        for (var index = 1; index < rooms.length; index++) {
+            urlsearch = urlsearch + ", " + rooms[index];
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    console.log("Reservation is done successfully.")
+                    alert("Congratulation! Your rooms have been reserved, and the confirmation e-mail will be sent to you soon !")
+                } else {
+                    console.log("Reservation is failed.")
+                    alert("Sorry ! Your reservation failed, and please check all the information is correct !")
+                }
+            }
+        };
+        xhttp.open("POST", urlsearch, true);
+        xhttp.send();
+        return false;
+    }
+</script>
+
+</body>
+</html>
