@@ -44,7 +44,7 @@
                     <a href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
                 </li>
                 <li>
-                    <a class="active-menu" href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="admin_room_management_add.html">Add Room</a>
@@ -115,61 +115,42 @@
                 <div class="col-md-12">
                     <h2>Hi Admin</h2>
                     <h5>Welcome Admin , Love to see you back. </h5>
-
                 </div>
             </div>
 
-            <!-- /. ROW for search -->
+            <!-- content starts here -->
             <hr />
             <div class="row">
                 <div class="col-md-12">
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3>Please input the room no to delete...</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <form role="form" name="deleteroomform" onsubmit="return deleteRoom();">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Room No</label>
-                                            <input type="text" class="form-control" name="roomno" id="roomno" />
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Click to delete</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Form Elements -->
-                </div>
-            </div>
-            <!-- /. ROW  for all the rooms-->
-            <hr />
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Form Elements -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3>This room has been deleted...</h3>
+                            <form role="form" name="listroomform" onsubmit="return listReservation();">
+                                <button type="submit" class="btn btn-primary">Click to list all the reservations</button>
+                            </form>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
 
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-bordered table-hover" >
+                                        <table class="table table-striped table-bordered table-hover">
                                             <thead>
                                             <tr>
-                                                <th>Room Number</th>
-                                                <th>Base Price</th>
-                                                <th>Room Type</th>
-                                                <th>Smoking</th>
+                                                <th>#</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Driver License</th>
+                                                <th>e-mail</th>
+                                                <th>Check In Date</th>
+                                                <th>Check Out Date</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="dataTables-deleteroom">
+                                            <tbody id="dataTables-listreservation">
                                             <tr name= "odd gradeX">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -187,6 +168,8 @@
                     <!-- End Form Elements -->
                 </div>
             </div>
+
+            <!-- content ends here -->
 
         </div>
         <!-- /. PAGE INNER  -->
@@ -211,38 +194,34 @@
 
     var apiserverhost = "http://localhost:8080";
 
-    function deleteRoom() {
-        var form = document.deleteroomform;
-        if (!checkFormValue(form)) {
-            alert("Please input all the information !");
-            return false;
-        }
+    function listReservation() {
+        var form = document.listroomform;
 
-        //http://localhost:8080/api/v1/rooms/1234
-        var urlsearch = apiserverhost + "/api/v1/rooms/";
-        urlsearch = urlsearch + form.roomno.value;
+        //http://localhost:8080/api/v1/reservations
+        var urlsearch = apiserverhost + "/api/v1/reservations";
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState == 4) {
                 if (xhttp.status == 200) {
-                    console.log("Delete a room successfully.")
+                    console.log("List all the reservations successfully.")
                     var reportdata = JSON.parse(xhttp.responseText);
-                    updateAddRoomTable(reportdata);
-                    alert("Congratulation ! The room has been deleted from Mini System .");
+                    updateListReservationTable(reportdata);
+                    alert("Congratulation ! Here is the list of all the reservations .");
                 } else {
-                    resetAddRoomTable();
-                    console.log("Delete a room failed.")
-                    alert("Sorry ! Would you like to try other room ? ")
+                    resetListReservationTable();
+                    console.log("List all the reservations failed.")
+                    alert("Sorry ! Can't find any record. ")
                 }
             }
         };
-        xhttp.open("DELETE", urlsearch, true);
+        xhttp.open("GET", urlsearch, true);
         xhttp.send();
         return false;
     }
-    function resetAddRoomTable() {
-        var table = document.getElementById("dataTables-deleteroom");
+
+    function resetListReservationTable() {
+        var table = document.getElementById("dataTables-listreservation");
 
         var last;
         while (last = table.lastChild) {
@@ -250,36 +229,59 @@
         }
     }
 
-    function updateAddRoomTable(object) {
-        var table = document.getElementById("dataTables-deleteroom");
+    function updateListReservationTable(objects) {
+        var table = document.getElementById("dataTables-listreservation");
 
-        resetAddRoomTable();
+        resetListReservationTable();
 
-        var row = document.createElement("tr");
-        row.className = "odd gradeX";
+        for (var i = 0; i < objects.length; i++) {
+            var object = objects[i];
 
-        var cell = document.createElement("td");
-        var cellText = document.createTextNode(object['room_number']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            var row = document.createElement("tr");
+            row.className = "odd gradeX";
 
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['base_price']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(object['id']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
 
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['room_type']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object.name.fname);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
 
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['smoking']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object.name.lname);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
 
-        //row added to end of table body
-        table.appendChild(row);
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object.dlNo);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object.email);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            var cell = document.createElement("td");
+            var date = new Date(object.checkinDate);
+            var cellText = document.createTextNode((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            var date = new Date(object.checkoutDate);
+            var cellText = document.createTextNode((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            table.appendChild(row);
+
+        }
+
     }
 
     function checkFormValue(object) {
@@ -293,6 +295,7 @@
         }
         return true;
     }
+
 </script>
 
 </body>

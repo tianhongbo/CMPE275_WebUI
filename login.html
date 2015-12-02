@@ -93,9 +93,9 @@
 
         if(xhttp.status === 200) {
           var myArr = JSON.parse(xhttp.responseText);
-          if(myArr.usertype === "admin") {
+          if(myArr.usertype == "admin") {
             window.location = "admin.html";
-          } else if(myArr.usertype === "agent"){
+          } else if(myArr.usertype == "agent"){
             window.location = "agent.html";
           } else {
             window.location = "Login.html";

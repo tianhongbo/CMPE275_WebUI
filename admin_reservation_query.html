@@ -1,0 +1,568 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!-- MORRIS CHART STYLES-->
+    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <!-- GOOGLE FONTS-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">Mini Hotel</a>
+        </div>
+        <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> Today is:
+            <span id="spantodaydate"></span>
+            <script>document.getElementById("spantodaydate").innerHTML=Date();</script>
+            <a href="index.html" class="btn btn-danger square-btn-adjust">Logout</a>
+        </div>
+    </nav>
+    <!-- /. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+                <li class="text-center">
+                    <img src="assets/img/admin_user.png" class="user-image img-responsive"/>
+                </li>
+                <li>
+                    <a href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_room_management_add.html">Add Room</a>
+                        </li>
+                        <li>
+                            <a href="admin_room_management_delete.html">Delete Room</a>
+                        </li>
+                        <li>
+                            <a href="admin_room_management_list.html">List Room</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a  href="#"><i class="fa fa-edit fa-3x"></i> User Management<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_user_management_add.html">Add User</a>
+                        </li>
+                        <li>
+                            <a href="admin_user_management_delete.html">Delete User</a>
+                        </li>
+                        <li>
+                            <a href="admin_user_management_list.html">List User</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a  href="#"><i class="fa fa-laptop fa-3x"></i> Guest Service<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_order_check_in.html">Check In</a>
+                        </li>
+                        <li>
+                            <a href="admin_order_check_out.html">Check Out</a>
+                        </li>
+                        <li>
+                            <a href="admin_order_list.html">List Orders</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a  href="#"><i class="fa fa-sitemap fa-3x"></i> Reservation Service<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_reservation_create.html">Make Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_cancel.html">Cancel Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_query.html">Search Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_list.html">List Reservation</a>
+                        </li>
+                    </ul>
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper" >
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Hi Admin</h2>
+                    <h5>Welcome Admin , Love to see you back. </h5>
+                </div>
+            </div>
+
+            <!-- content start here -->
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Form Elements -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3>Please input the reservation id...</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <form role="form" name="queryreservationform" onsubmit="return query_reservation();">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Reservation id</label>
+                                            <input type="text" class="form-control" name="reservationid" id="reservationid" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Click to query</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Form Elements -->
+                </div>
+            </div>
+            <!-- /. ROW  for available rooms-->
+
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3>Here is the reservation information...</h3>
+                        </div>
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!--   Kitchen Sink -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Date
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Check In</th>
+                                        <th>Check Out</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dataTables-checkindate">
+                                    <tr name= "odd gradeX">
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <!--here is updated by JS: updateAvailableRoomsTable -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Kitchen Sink -->
+                </div>
+                <div class="col-md-12">
+                    <!--   Kitchen Sink -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Room List
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Room Number</th>
+                                        <th>Base Price</th>
+                                        <th>Room Type</th>
+                                        <th>Smoking</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dataTables-checkinroom">
+                                    <tr name= "odd gradeX">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <!--here is updated by JS: updateAvailableRoomsTable -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Kitchen Sink -->
+                </div>
+                <div class="col-md-12">
+                    <!--   Kitchen Sink -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Name
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Driver License</th>
+                                        <th>e-mail</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dataTables-checkinname">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Kitchen Sink -->
+                </div>
+                <div class="col-md-12">
+                    <!--   Basic Table  -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Billing Address
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Street</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Zip</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dataTables-checkinaddress">
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Basic Table  -->
+                </div>
+            </div>
+            <!-- /. ROW  -->
+            <!-- content ends here -->
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+<!-- JQUERY SCRIPTS -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- MORRIS CHART SCRIPTS -->
+<script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+<script src="assets/js/morris/morris.js"></script>
+<!-- CUSTOM SCRIPTS -->
+<script src="assets/js/custom.js"></script>
+
+<script type="text/javascript">
+
+    var apiserverhost = "http://localhost:8080";
+
+
+    function checkin() {
+        var form = document.queryreservationform;
+        if (!checkFormValue(form)) {
+            alert("Please input all the information !");
+            return false;
+        }
+
+        //http://localhost:8080/api/v1/orders/1
+        var urlsearch = apiserverhost + "/api/v1/orders/";
+        urlsearch += form.reservationid.value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    console.log("Check in the reservation successfully.")
+                    var reportdata = JSON.parse(xhttp.responseText);
+
+                    alert("Congratulation ! The reservation has been checked in.");
+                } else {
+                    resetCheckinDateTable();
+                    resetCheckinRoomTable();
+                    resetCheckinNameTable();
+                    resetCheckinAddressTable();
+
+                    console.log("Check in reservation failed.")
+                    alert("Sorry ! Would you like to try it again ? ")
+                }
+            }
+        };
+        xhttp.open("POST", urlsearch, true);
+        xhttp.send();
+        return false;
+    }
+    function query_reservation() {
+        var form = document.queryreservationform;
+        if (!checkFormValue(form)) {
+            alert("Please input all the information !");
+            return false;
+        }
+
+        //http://localhost:8080/api/v1/reservations/1
+        var urlsearch = apiserverhost + "/api/v1/reservations/";
+        urlsearch += form.reservationid.value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4) {
+                if (xhttp.status == 200) {
+                    console.log("Query the reservation information successfully.")
+                    var reportdata = JSON.parse(xhttp.responseText);
+                    updateCheckinDateTable(reportdata);
+                    updateCheckinRoomTable(reportdata.roomList);
+                    updateCheckinNameTable(reportdata);
+                    updateCheckinAddressTable(reportdata.billingAddress);
+                    alert("Congratulation ! Here is the information of reservation .");
+                } else {
+                    resetCheckinDateTable();
+                    resetCheckinRoomTable();
+                    resetCheckinNameTable();
+                    resetCheckinAddressTable();
+
+                    console.log("Query reservation information failed.")
+                    alert("Sorry ! Would you like to try it again ? ")
+                }
+            }
+        };
+        xhttp.open("GET", urlsearch, true);
+        xhttp.send();
+        return false;
+    }
+
+    function resetCheckinNameTable() {
+        var table = document.getElementById("dataTables-checkinname");
+
+        var last;
+        while (last = table.lastChild) {
+            table.removeChild(last);
+        }
+    }
+
+    function updateCheckinNameTable(object) {
+        var table = document.getElementById("dataTables-checkinname");
+
+        resetCheckinNameTable();
+
+        var row = document.createElement("tr");
+        row.className = "odd gradeX";
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(object.name['fname']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object.name['midname']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object.name['lname']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object['dlNo']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object['email']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        table.appendChild(row);
+    }
+
+    function resetCheckinAddressTable() {
+        var table = document.getElementById("dataTables-checkinaddress");
+
+        var last;
+        while (last = table.lastChild) {
+            table.removeChild(last);
+        }
+    }
+
+    function updateCheckinAddressTable(object) {
+        var table = document.getElementById("dataTables-checkinaddress");
+
+        resetCheckinAddressTable();
+
+        var row = document.createElement("tr");
+        row.className = "odd gradeX";
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(object['street']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object['city']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(object['state']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(object['zip']);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        table.appendChild(row);
+    }
+
+    function resetCheckinDateTable() {
+        var table = document.getElementById("dataTables-checkindate");
+
+        var last;
+        while (last = table.lastChild) {
+            table.removeChild(last);
+        }
+    }
+
+    function updateCheckinDateTable(object) {
+        var table = document.getElementById("dataTables-checkindate");
+
+        resetCheckinDateTable();
+
+        var row = document.createElement("tr");
+        row.className = "odd gradeX";
+
+        var cell = document.createElement("td");
+        var date = new Date(object['checkinDate']);
+        var cellText = document.createTextNode((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        var date = new Date(object['checkoutDate']);
+        var cellText = document.createTextNode((date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear());
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        table.appendChild(row);
+    }
+
+    function resetCheckinRoomTable() {
+        var table = document.getElementById("dataTables-checkinroom");
+
+        var last;
+        while (last = table.lastChild) {
+            table.removeChild(last);
+        }
+    }
+
+    function updateCheckinRoomTable(objects) {
+        var table = document.getElementById("dataTables-checkinroom");
+
+        resetCheckinRoomTable();
+
+        for (var i = 0; i < objects.length; i++) {
+            var object = objects[i];
+
+            var row = document.createElement("tr");
+            row.className = "odd gradeX";
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(object['room_number']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object['base_price']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object['room_type']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object['smoking']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            table.appendChild(row);
+
+        }
+
+    }
+
+    function checkFormValue(object) {
+        var elem = object.elements;
+
+        for(var i = 0; i < elem.length; i++)
+        {
+            if (elem[i].tagName == "INPUT" && elem[i].value == "") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+</script>
+
+</body>
+</html>

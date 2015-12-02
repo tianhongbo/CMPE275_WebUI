@@ -30,7 +30,7 @@
         <div style="color: white; padding: 15px 50px 5px 50px; float: right; font-size: 16px;"> Today is:
             <span id="spantodaydate"></span>
             <script>document.getElementById("spantodaydate").innerHTML=Date();</script>
-            <a href="login.html" class="btn btn-danger square-btn-adjust">Login</a>
+            <a href="index.html" class="btn btn-danger square-btn-adjust">Logout</a>
         </div>
     </nav>
     <!-- /. NAV TOP  -->
@@ -38,13 +38,72 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
                 <li class="text-center">
-                    <img src="assets/img/hotel.jpg" class="user-image img-responsive"/>
+                    <img src="assets/img/admin_user.png" class="user-image img-responsive"/>
                 </li>
                 <li>
-                    <a class="active-menu"  href="index.html"><i class="fa fa-laptop fa-3x"></i> Search Rooms</a>
+                    <a href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
                 </li>
                 <li>
-                    <a  href="introduction.html"><i class="fa fa-edit fa-3x"></i> Introduction</a>
+                    <a href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_room_management_add.html">Add Room</a>
+                        </li>
+                        <li>
+                            <a href="admin_room_management_delete.html">Delete Room</a>
+                        </li>
+                        <li>
+                            <a href="admin_room_management_list.html">List Room</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a  href="#"><i class="fa fa-edit fa-3x"></i> User Management<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_user_management_add.html">Add User</a>
+                        </li>
+                        <li>
+                            <a href="admin_user_management_delete.html">Delete User</a>
+                        </li>
+                        <li>
+                            <a href="admin_user_management_list.html">List User</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a  href="#"><i class="fa fa-laptop fa-3x"></i> Guest Service<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_order_check_in.html">Check In</a>
+                        </li>
+                        <li>
+                            <a href="admin_order_check_out.html">Check Out</a>
+                        </li>
+                        <li>
+                            <a href="admin_order_list.html">List Orders</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a  href="#"><i class="fa fa-sitemap fa-3x"></i> Reservation Service<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="admin_reservation_create.html">Make Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_cancel.html">Cancel Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_query.html">Search Reservation</a>
+                        </li>
+                        <li>
+                            <a href="admin_reservation_list.html">List Reservation</a>
+                        </li>
+                    </ul>
+
                 </li>
             </ul>
         </div>
@@ -54,10 +113,12 @@
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Welcome to Mini Hotel !</h2>
-                    <h5>There are tons of very good deals waiting for you here. </h5>
+                    <h2>Hi Admin</h2>
+                    <h5>Welcome Admin , Love to see you back. </h5>
                 </div>
             </div>
+
+            <!-- The content start here -->
             <!-- /. ROW for search -->
             <hr />
             <div class="row">
@@ -131,7 +192,7 @@
                     <!-- End Form Elements -->
                 </div>
             </div>
-           <!-- /. ROW  for available rooms-->
+            <!-- /. ROW  for available rooms-->
             <hr />
             <div class="row">
                 <div class="col-md-12">
@@ -234,15 +295,16 @@
                                 </div>
                             </form>
                         </div>
-                    <!-- End Form Elements -->
+                        <!-- End Form Elements -->
+                    </div>
                 </div>
             </div>
-        </div>
+            <!-- The content ends here -->
 
+        </div>
         <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
-</div>
 </div>
 <!-- /. WRAPPER  -->
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -257,6 +319,7 @@
 <script src="assets/js/morris/morris.js"></script>
 <!-- CUSTOM SCRIPTS -->
 <script src="assets/js/custom.js"></script>
+
 <script type="text/javascript">
 
     var apiserverhost = "http://localhost:8080";
