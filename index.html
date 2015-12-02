@@ -90,12 +90,17 @@
                                             <label>Room type </label>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType1" value="option1" checked />Two queen beds
+                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType1" value="two-queen-beds" />Two queen beds
                                                 </label>
                                             </div>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType2" value="option2"/>One king bed
+                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType2" value="one-king-bed" />One king bed
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRoomType" id="optionsRoomType3" value="do-not-care" checked />Do-not-care
                                                 </label>
                                             </div>
                                         </div>
@@ -109,7 +114,7 @@
                                             </div>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="optionsRoomSmoking" id="optionsRoomSmoking2" value="no-smoking"/>No-smoking
+                                                    <input type="radio" name="optionsRoomSmoking" id="optionsRoomSmoking2" value="no-smoking" />No-smoking
                                                 </label>
                                             </div>
                                             <div class="radio">
@@ -271,6 +276,13 @@
         urlsearch = urlsearch + "checkin_date=" + checkinDate;
         urlsearch = urlsearch + "&checkout_date=" + checkoutDate;
         urlsearch = urlsearch + "&room_num=" + numofrooms;
+        if (roomtype == "two-queen-beds" || roomtype == "one-king-bed") {
+            urlsearch = urlsearch + "&room_type=" + roomtype;
+        }
+
+        if (smoking == "smoking" || smoking == "no-smoking") {
+            urlsearch = urlsearch + "&smoking=" + smoking;
+        }
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -280,6 +292,7 @@
                     var rooms = JSON.parse(xhttp.responseText);
                     updateAvailableRoomsTable(rooms);
                 } else {
+                    resetAvailableRoomsTable();
                     console.log("Searching available room failed.")
                     alert("Sorry ! There are no enough vacant rooms for you. Would you like to try other date? ")
                 }
@@ -290,13 +303,19 @@
         return false;
     }
 
-    function updateAvailableRoomsTable(rooms) {
+    function resetAvailableRoomsTable(rooms) {
         var table = document.getElementById("dataTables-availablerooms");
 
         var last;
-        while (last = table.lastChild){
+        while (last = table.lastChild) {
             table.removeChild(last);
         }
+    }
+
+    function updateAvailableRoomsTable(rooms) {
+        var table = document.getElementById("dataTables-availablerooms");
+
+        resetAvailableRoomsTable();
 
         for (var index = 0; index < rooms.length; index++) {
             var room = rooms[index];
