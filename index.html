@@ -44,7 +44,7 @@
                     <a class="active-menu"  href="index.html"><i class="fa fa-laptop fa-3x"></i> Search Rooms</a>
                 </li>
                 <li>
-                    <a  href="ui.html"><i class="fa fa-edit fa-3x"></i> Search Reservations</a>
+                    <a  href="introduction.html"><i class="fa fa-edit fa-3x"></i> Introduction</a>
                 </li>
             </ul>
         </div>
@@ -65,11 +65,11 @@
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Please input the information to start searching...
+                            <h3>Please input the information to start searching...</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                    <form role="form" name="searchroom" onsubmit="return searchRoom();">
+                                <form role="form" name="searchroom" onsubmit="return searchRoom();">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Check in date</label>
@@ -133,7 +133,7 @@
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Please select the rooms you want to reserve...
+                            <h3>Please select the rooms you want to reserve...</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -176,21 +176,7 @@
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Please input the information to make a reservation...
-                            <!--
-                                http://localhost:8080/api/v1/reservations
-                                ?email=hongbo.tian@sjsu.edu
-                                &fname=hongbo
-                                &midname=
-                                &lname=tian
-                                &street=888 4th street
-                                &city=San Jose&state=CA
-                                &zip=91666
-                                &rooms=1234, 5678
-                                &dl_no=F1234567
-                                &checkin_date=1/1/2016
-                                &checkout_date=1/10/2016
-                            -->
+                            <h3>Please input the information to make a reservation...</h3>
                         </div>
                         <div class="panel-body">
                             <form role="form" name="makereservationform" onsubmit="return makeReservation();">
@@ -235,12 +221,12 @@
                                             <input type="text" class="form-control" name="zip" id="zip" />
                                         </div>
                                     </div>
-                            </div>
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">Click to reserve</button>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Click to reserve</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     <!-- End Form Elements -->
@@ -251,6 +237,7 @@
         <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
+</div>
 </div>
 <!-- /. WRAPPER  -->
 <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
@@ -266,6 +253,7 @@
 <!-- CUSTOM SCRIPTS -->
 <script src="assets/js/custom.js"></script>
 <script type="text/javascript">
+
     function searchRoom() {
 
         if (!checkFormValue(document.searchroom)) {
@@ -286,10 +274,6 @@
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
-            console.log("callback is fired.")
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-
-            }
             if (xhttp.readyState == 4) {
                 if (xhttp.status == 200) {
                     console.log("get data successfully.")

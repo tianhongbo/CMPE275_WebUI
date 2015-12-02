@@ -41,7 +41,7 @@
                     <img src="assets/img/admin_user.png" class="user-image img-responsive"/>
                 </li>
                 <li>
-                    <a class="active-menu" href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
+                    <a href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
@@ -59,7 +59,7 @@
                 </li>
 
                 <li>
-                    <a  href="#"><i class="fa fa-edit fa-3x"></i> User Management<span class="fa arrow"></span></a>
+                    <a class="active-menu" href="#"><i class="fa fa-edit fa-3x"></i> User Management<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="admin_user_management_add.html">Add User</a>
@@ -98,62 +98,36 @@
                 </div>
             </div>
 
+            <!-- /. ROW  for users-->
             <hr />
             <div class="row">
                 <div class="col-md-12">
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3>Please input the Date...</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <form role="form" name="reportform" onsubmit="return queryDailyReport();">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Report date</label>
-                                            <input type="date" class="form-control" name="reportdate" id="reportdate" />
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Click to query</button>
-                                    </div>
-                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Form Elements -->
-                </div>
-            </div>
-            <!-- /. ROW  for available rooms-->
-            <hr />
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Form Elements -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3>Here is the reporting data...</h3>
+                            <form role="form" name="reportform" onsubmit="return listUser();">
+                                <button type="submit" class="btn btn-primary">Click to list all the users</button>
+                            </form>
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-
                                     <div class="table-responsive">
                                         <table class="table table-striped table-bordered table-hover" >
                                             <thead>
                                             <tr>
-                                                <th>in_service</th>
-                                                <th>vacant</th>
-                                                <th>under_reservation</th>
-                                                <th>available</th>
+                                                <th>User Name</th>
+                                                <th>Password</th>
+                                                <th>Role</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="dataTables-dailyreport">
+                                            <tbody id="dataTables-listuser">
                                             <tr name= "odd gradeX">
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
                                             </tr>
-                                            <!--here is updated by JS: updateAvailableRoomsTable -->
+                                            <!--here is updated by JS:  -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -186,26 +160,25 @@
 <script src="assets/js/custom.js"></script>
 
 <script type="text/javascript">
+    var apiserverhost = "http://localhost:8080";
 
-    function queryDailyReport() {
+    function listUser() {
 
-        var form = document.reportform;
-        var reportdate =new Date(form.reportdate.value);
-        //http://localhost:8080/api/v1/reports/daily?date=11/19/2015
-
-        var urlsearch = "http://localhost:8080/api/v1/reports/daily?";
-        urlsearch = urlsearch + "date=" + reportdate;
+       //http://localhost:8080/api/v1/users?password=abc&role=agent&name=Mike password=abc&role=agent&name=Tid
+        var urlsearch = apiserverhost + "/api/v1/users?";
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState == 4) {
                 if (xhttp.status == 200) {
-                    console.log("Query daily report data successfully.")
+                    console.log("List users successfully.")
                     var reportdata = JSON.parse(xhttp.responseText);
-                    updateReportTable(reportdata);
+                    updateListUserTable(reportdata);
+                    alert("Congratulation ! Here is the list of all users. ")
                 } else {
-                    console.log("Daily report failed.")
-                    alert("Sorry ! Would you like to try other date? ")
+                    resetListUserTable();
+                    console.log("List user failed.")
+                    alert("Sorry ! Would you like to try agian ? ")
                 }
             }
         };
@@ -214,40 +187,46 @@
         return false;
     }
 
-    function updateReportTable(object) {
-        var table = document.getElementById("dataTables-dailyreport");
+    function resetListUserTable() {
+        var table = document.getElementById("dataTables-listuser");
 
         var last;
-        while (last = table.lastChild){
+        while (last = table.lastChild) {
             table.removeChild(last);
         }
-
-        var row = document.createElement("tr");
-        row.className = "odd gradeX";
-
-        var cell = document.createElement("td");
-        var cellText = document.createTextNode(object['in_service']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['vacant']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['under_reservation']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(object['available']);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        //row added to end of table body
-        table.appendChild(row);
     }
+
+    function updateListUserTable(objects) {
+        var table = document.getElementById("dataTables-listuser");
+
+        resetListUserTable();
+
+        for (var i = 0; i < objects.length; i++) {
+            var object = objects[i];
+            var row = document.createElement("tr");
+            row.className = "odd gradeX";
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(object['username']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object['password']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(object['usertype']);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            table.appendChild(row);
+        }
+
+    }
+
 </script>
 
 </body>

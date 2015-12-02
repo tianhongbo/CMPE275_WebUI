@@ -41,10 +41,10 @@
                     <img src="assets/img/admin_user.png" class="user-image img-responsive"/>
                 </li>
                 <li>
-                    <a class="active-menu" href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
+                    <a href="admin.html"><i class="fa fa-dashboard fa-3x"></i> Report</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
+                    <a class="active-menu" href="#"><i class="fa fa-table fa-3x"></i> Room Management<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="admin_room_management_add.html">Add Room</a>
@@ -98,39 +98,72 @@
                 </div>
             </div>
 
+            <!-- /. ROW for search -->
             <hr />
             <div class="row">
                 <div class="col-md-12">
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3>Please input the Date...</h3>
+                            <h3>Please input the new room information to start...</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <form role="form" name="reportform" onsubmit="return queryDailyReport();">
-                                    <div class="col-md-12">
+                                <form role="form" name="addroomform" onsubmit="return addRoom();">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Report date</label>
-                                            <input type="date" class="form-control" name="reportdate" id="reportdate" />
+                                            <label>Room No</label>
+                                            <input type="text" class="form-control" name="roomno" id="roomno" />
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Click to query</button>
+                                        <div class="form-group">
+                                            <label>Room type </label>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="roomtype" id="optionsRoomType1" value="two-queen-beds" checked />Two queen beds
+                                                </label>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="roomtype" id="optionsRoomType2" value="one-king-bed"/>One king bed
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Click to add</button>
                                     </div>
-                                 </form>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Base Price($ per night)</label>
+                                            <input type="number" class="form-control" name="baseprice" id="baseprice" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Smoking </label>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="smoking" id="optionsRoomSmoking1" value="smoking" />Smoking
+                                                </label>
+                                            </div>
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" name="smoking" id="optionsRoomSmoking2" value="no-smoking" checked />No-smoking
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <!-- End Form Elements -->
                 </div>
             </div>
-            <!-- /. ROW  for available rooms-->
+            <!-- /. ROW  for all the rooms-->
             <hr />
             <div class="row">
                 <div class="col-md-12">
                     <!-- Form Elements -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3>Here is the reporting data...</h3>
+                            <h3>This new room has been added...</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -140,13 +173,13 @@
                                         <table class="table table-striped table-bordered table-hover" >
                                             <thead>
                                             <tr>
-                                                <th>in_service</th>
-                                                <th>vacant</th>
-                                                <th>under_reservation</th>
-                                                <th>available</th>
+                                                <th>Room Number</th>
+                                                <th>Base Price</th>
+                                                <th>Room Type</th>
+                                                <th>Smoking</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="dataTables-dailyreport">
+                                            <tbody id="dataTables-addroom">
                                             <tr name= "odd gradeX">
                                                 <td></td>
                                                 <td></td>
@@ -187,35 +220,43 @@
 
 <script type="text/javascript">
 
-    function queryDailyReport() {
+    var apiserverhost = "http://localhost:8080";
 
-        var form = document.reportform;
-        var reportdate =new Date(form.reportdate.value);
-        //http://localhost:8080/api/v1/reports/daily?date=11/19/2015
+    function addRoom() {
+        var form = document.addroomform;
+        if (!checkFormValue(form)) {
+            alert("Please input all the information !");
+            return false;
+        }
 
-        var urlsearch = "http://localhost:8080/api/v1/reports/daily?";
-        urlsearch = urlsearch + "date=" + reportdate;
+        //http://localhost:8080/api/v1/rooms?room_no=1234&room_type=1&smoking=true&base_price=100
+        var urlsearch = apiserverhost + "/api/v1/rooms?";
+        urlsearch = urlsearch + "room_no=" + form.roomno.value;
+        urlsearch = urlsearch + "&room_type=" + form.roomtype.value;
+        urlsearch = urlsearch + "&smoking=" + form.smoking.value;
+        urlsearch = urlsearch + "&base_price=" + form.baseprice.value;
 
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (xhttp.readyState == 4) {
                 if (xhttp.status == 200) {
-                    console.log("Query daily report data successfully.")
+                    console.log("Add a new room successfully.")
                     var reportdata = JSON.parse(xhttp.responseText);
-                    updateReportTable(reportdata);
+                    updateAddRoomTable(reportdata);
+                    alert("Congratulation ! The new room has been added to Mini System .");
                 } else {
-                    console.log("Daily report failed.")
-                    alert("Sorry ! Would you like to try other date? ")
+                    console.log("Add a room failed.")
+                    alert("Sorry ! Would you like to try other room? ")
                 }
             }
         };
-        xhttp.open("GET", urlsearch, true);
+        xhttp.open("POST", urlsearch, true);
         xhttp.send();
         return false;
     }
 
-    function updateReportTable(object) {
-        var table = document.getElementById("dataTables-dailyreport");
+    function updateAddRoomTable(object) {
+        var table = document.getElementById("dataTables-addroom");
 
         var last;
         while (last = table.lastChild){
@@ -226,27 +267,39 @@
         row.className = "odd gradeX";
 
         var cell = document.createElement("td");
-        var cellText = document.createTextNode(object['in_service']);
+        var cellText = document.createTextNode(object['room_number']);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(object['vacant']);
+        cellText = document.createTextNode(object['base_price']);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(object['under_reservation']);
+        cellText = document.createTextNode(object['room_type']);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(object['available']);
+        cellText = document.createTextNode(object['smoking']);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         //row added to end of table body
         table.appendChild(row);
+    }
+
+    function checkFormValue(object) {
+        var elem = object.elements;
+
+        for(var i = 0; i < elem.length; i++)
+        {
+            if (elem[i].tagName == "INPUT" && elem[i].value == "") {
+                return false;
+            }
+        }
+        return true;
     }
 </script>
 
